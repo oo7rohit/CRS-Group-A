@@ -118,7 +118,7 @@ public class ProfessorOperations implements ProfessorUtilsInterface {
         }
         return courses;
     }
-
+    
     public Professor validateCredentialsWithDB(String userId, String password) {
         try {
             ConnectionWithDB connObj = new ConnectionWithDB();
@@ -139,7 +139,11 @@ public class ProfessorOperations implements ProfessorUtilsInterface {
 
         return null;
     }
-
+    /**
+     * Method to obtain a list of courses using SQL commands
+     * @param userId of the user
+     * @return returns the courses present in the database
+     */
     public ArrayList<Course> viewCoursesWithDB(String userId) throws SQLException {
 
         ArrayList<Course> courses = new ArrayList<Course>();

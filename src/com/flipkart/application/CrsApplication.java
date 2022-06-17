@@ -16,13 +16,13 @@ public class CrsApplication {
     public static void main(String[] args) throws IOException, SQLException, UserNotFoundException, CourseAlreadyRegisteredException {
 //        final Logger logger = Logger.getLogger(CrsApplication.class);
         while(true){
-            System.out.println("");
-            System.out.println("----------WELCOME TO COURSE REGISTRATION SYSTEM ----------");
+        	System.out.println("");
+            System.out.println("\t\t<<<<<<<< WELCOME TO COURSE REGISTRATION SYSTEM >>>>>>>>");
           
             System.out.println("");
-            System.out.println("Choices \n1. Register As User\n2. Login\n3. Update Your Password\n4. Exit");
-            System.out.println("---------------------------------------------------------");
-            System.out.println("Choose one of the above");
+            System.out.println("\t\tChoices: \n\t\t1. Register As User\n\t\t2. Login\n\t\t3. Update Your Password\n\t\t4. Exit");
+            System.out.println("\t\t********************************************************");
+            System.out.println("\t\tChoose one of the above:");
             BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
             int choice=Integer.parseInt(br.readLine());
             switch (choice) {
@@ -39,11 +39,11 @@ public class CrsApplication {
                     updatePassword.updatePassword();
                     break;
                 case 4:
-                    System.out.println("Bye");
+                    System.out.println("\t\tBye");
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("Invalid Choice!!!! Please enter Details Again");
+                	System.out.println("\t\tInvalid choice! \n\t\tPlease enter your details again");
             }
 
         }

@@ -13,33 +13,41 @@ public class AdminMenu {
         int choice;
         int d=1;
         while(d!=0) {
-            System.out.println("Enter your choice : ");
-            System.out.println("1. Add Professor");
-            System.out.println("2. Add Course");
-            System.out.println("3. Drop Course");
-            System.out.println("4. Approve Pending Students");
-            System.out.println("5. Assign Course To Professor");
-            System.out.println("6. View All the courses");
-            System.out.println("7. Exit");
+//            System.out.println("Enter your choice : ");
+//            System.out.println("1. Add Professor");
+//            System.out.println("2. Add Course");
+//            System.out.println("3. Drop Course");
+//            System.out.println("4. Approve Pending Students");
+//            System.out.println("5. Assign Course To Professor");
+//            System.out.println("6. View All the courses");
+//            System.out.println("7. Exit");
+        	System.out.println("\t\tEnter your choice : ");
+            System.out.println("\t\t1. Add Professor");
+            System.out.println("\t\t2. Add Course");
+            System.out.println("\t\t3. Drop Course");
+            System.out.println("\t\t4. Approve Pending Students");
+            System.out.println("\t\t5. Assign Course To Professor");
+            System.out.println("\t\t6. View All the courses");
+            System.out.println("\t\t7. Exit");
             Scanner in= new Scanner(System.in);
 
             choice = in.nextInt();
             switch (choice) {
 
                 case 1:
-                    System.out.println("Enter Prof ID");
+                	System.out.println("\t\tEnter Professor ID");
                     String profId = in.next();
-                    System.out.println("Name:");
+                    System.out.println("\t\tName:");
                     String name = in.next();
-                    System.out.println("Professor Email id ");
+                    System.out.println("\t\tProfessor Email id ");
                     String email = in.next();
-                    System.out.println("Password: ");
+                    System.out.println("\t\tPassword: ");
                     String password = in.next();
-                    System.out.println("Professor Contact number");
+                    System.out.println("\t\tProfessor Contact number");
                     String contact = in.next();
-                    System.out.println("Area of expertise");
+                    System.out.println("\t\tArea of expertise");
                     String areaOfExpertise = in.next();
-                    System.out.println("Years of experience");
+                    System.out.println("\t\tYears of experience");
                     int yoe = in.nextInt();
                     Professor p = new Professor();
                     p.setUserId(profId);
@@ -59,13 +67,11 @@ public class AdminMenu {
                     }
                     break;
                 case 2:
-                    System.out.println("Enter Course ID");
+                	System.out.println("\t\tEnter Course ID");
                     int courseId = in.nextInt();
-                    System.out.println("Course Name:");
+                    System.out.println("\t\tCourse Name:");
                     String courseName = in.next();
                     Course c = new Course(courseId, courseName);
-//                    c.setCourseId(courseId);
-//                    c.setCourseName(courseName);
                     AdminInterface admin1 = AdminOperation.getInstance();
 
                     try{
@@ -76,7 +82,7 @@ public class AdminMenu {
                     }
                     break;
                 case 3:
-                    System.out.println("Enter Course ID");
+                    System.out.println("\t\tEnter Course ID");
                     int cId = in.nextInt();
 
                     AdminInterface admin2= AdminOperation.getInstance();
@@ -100,9 +106,9 @@ public class AdminMenu {
 
                 case 5:
                 	AdminInterface admin4= AdminOperation.getInstance();
-                	System.out.println("Enter Course ID");
+                	System.out.println("\t\tEnter Course ID");
                     int coId = in.nextInt();
-                    System.out.println("Enter Professor ID");
+                    System.out.println("\t\tEnter Professor ID");
                     String poId = in.next();
                 	try{
                         admin4.assignCourse(coId, poId);
@@ -124,7 +130,7 @@ public class AdminMenu {
                 	d = 0;
                 	break;
                 default:
-                    System.out.println("Invalid choice!");
+                    System.out.println("\t\tInvalid choice!");
             }
         }
     }

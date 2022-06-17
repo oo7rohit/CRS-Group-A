@@ -24,23 +24,24 @@ public class CrsLoginMenu {
  */
     public void crsLoginMenu() throws IOException, SQLException, UserNotFoundException, CourseAlreadyRegisteredException {
         BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Enter the User Type\n1.Student \n2.Professor \n3.Admin");
+        System.out.println("\t\tEnter the User Type\n\t\t1.Student \n\t\t2.Professor \n\t\t3.Admin");
         int userType=Integer.parseInt(br.readLine());
-        System.out.println("Enter the userId:");
+        System.out.println("\t\tEnter the userId:");
         String userId=br.readLine();
-        System.out.println("Enter the password:");
+        System.out.println("\t\tEnter the password:");
         String password=br.readLine();
         switch(userType){
             case 1:
 
-                System.out.println("Validating Student credentials ........");
+                System.out.println("\t\tValidating Student credentials ........");
                 StudentDaoImplementation studentDaoImplementation=new StudentDaoImplementation();
                 Student student=studentDaoImplementation.validateCredentials(userId,password);
 
                 if(student!=null && student.isApproved()){
-                    System.out.println("+++++++++++++++++++++++++++++++++++");
-                    System.out.println("Hey Student. Welcome to the portal");
-                    System.out.println("+++++++++++++++++++++++++++++++++++");
+                	
+                	System.out.println("\t\t**********************************");
+                    System.out.println("\t\tHey Student. Welcome to the portal");
+                    System.out.println("\t\t**********************************");
                     CrsStudentMenu crsStudentMenu=new CrsStudentMenu();
                     crsStudentMenu.studentMenu(student);
                 }
@@ -49,9 +50,9 @@ public class CrsLoginMenu {
                     throw new UserNotFoundException(userId);
                 }
                 else{
-                    System.out.println("-----------------Can't LOGIN--------------------");
-                    System.out.println("--- Please Get Approval from Admin!! -------");
-                    System.out.println("------------------------------------------------");
+                	System.out.println("\t\t<<<<<<<<<<<<<<<< Can't LOGIN >>>>>>>>>>>>>>>>");
+                    System.out.println("\t\t<<<< Student has not been approved yet !! >>>>");
+                    System.out.println("\t\t**********************************************");
                 }
                 break;
             case 2:
@@ -59,9 +60,9 @@ public class CrsLoginMenu {
                 ProfessorService profServ=new ProfessorService();
                 Professor professor=profServ.validateCredentials(userId,password);
                 if(professor!=null){
-                    System.out.println("+++++++++++++++++++++++++++++++++++");
-                    System.out.println("-----Logged in as Professor-----");
-                    System.out.println("+++++++++++++++++++++++++++++++++++");
+                	System.out.println("\t\t************************************");
+                    System.out.println("\t\tHey Professor. Welcome to the portal");
+                    System.out.println("\t\t************************************");
                     CrsProfessorMenu crsProfessorMenu=new CrsProfessorMenu();
                     crsProfessorMenu.professorMenu(professor);
                 }
@@ -71,23 +72,23 @@ public class CrsLoginMenu {
                 }
                 break;
             case 3:
-                System.out.println("Validating Admin credentials ..........");
+                System.out.println("\t\tValidating Admin credentials ..........");
                 AdminDaoImplementation adminDaoImplementation=new AdminDaoImplementation();
                 boolean x= adminDaoImplementation.validateCredentials(userId,password);
                 if(x==true){
-                    System.out.println("+++++++++++++++++++++++++++++++++++");
-                    System.out.println("Hey Admin. Welcome to the portal");
-                    System.out.println("+++++++++++++++++++++++++++++++++++");
+                	System.out.println("\t\t********************************");
+                    System.out.println("\t\tHey Admin. Welcome to the portal");
+                    System.out.println("\t\t********************************");
                     AdminMenu adminMenu=new AdminMenu();
                     adminMenu.adminMenu();
                 }
                 else{
-                    System.out.println("Invalid User ID");
+                    System.out.println("\t\tInvalid User ID");
                     return;
                 }
                 break;
             default:
-                System.out.println("Invalid Choice");
+                System.out.println("\t\tInvalid Choice");
         }
     }
 }

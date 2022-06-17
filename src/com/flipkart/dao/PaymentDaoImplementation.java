@@ -7,6 +7,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class PaymentDaoImplementation implements PaymentDaoInterface{
+	/**
+	 * Method to insert Payments
+	 * 
+	 * @param paymentId 
+	 * @param paymentType
+	 */
     @Override
     public void insertIntoPayment(String paymentId, String paymentType) throws SQLException {
         String sql = "INSERT INTO `payment`\n" +
@@ -21,7 +27,13 @@ public class PaymentDaoImplementation implements PaymentDaoInterface{
         statement.setString(2,paymentId);
         statement.executeUpdate();
     }
-
+    /**
+	 * Method to insert into book keeper
+	 * 
+	 * @param paymentId of payment
+	 * @param studentId of student
+	 * @param semester 
+	 */
     @Override
     public void insertIntoBookkeeper(String paymentId, String studentId, int semester) throws SQLException {
         String sql = "INSERT INTO `bookkeeper`\n" +
@@ -39,7 +51,12 @@ public class PaymentDaoImplementation implements PaymentDaoInterface{
         statement.setInt(3,semester);
         statement.executeUpdate();
     }
-
+    
+    /**
+	 * Method to update the fees status
+	 * 
+	 * @param studentId of the student
+	 */
     @Override
     public void updateFeeStatus(String studentId) throws SQLException {
         String sql = "UPDATE `student`\n" +

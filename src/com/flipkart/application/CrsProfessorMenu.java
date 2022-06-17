@@ -15,28 +15,28 @@ public class CrsProfessorMenu {
     ProfessorService profServ=new ProfessorService();
     public void professorMenu(Professor professor) throws IOException, SQLException {
         while(true) {
-            System.out.println("---Professor Menu-----");
-            System.out.println("1.view Details\n2.view Courses\n3.View Available Courses\n4.View Enrolled Students in courses\n5.Make Report Card for a student\n6.Exit");
+        	System.out.println("\t\t<<< Professor Menu >>>");
+            System.out.println("\t\t1.View Details\n\t\t2.view Courses\n\t\t3.Register for Courses\n\t\t4.View Enrolled Students in courses\n\t\t5.Make Report Card for a student\n6.Exit");
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            System.out.println("Enter the choice");
+            System.out.println("\t\tEnter the choice");
             int option = Integer.parseInt(br.readLine());
             switch (option) {
                 case 1:
-                    System.out.println("Details");
-                    System.out.println("Id: "+professor.getUserId()+"\nProfessorName: "+professor.getUserName()+"\nEmailId: "+professor.getEmailId()+"\nAreaOfExpertise: "+professor.getAreaOfExpertise()+"\nYearsOfExperience: "+professor.getYearsOfExperience());
+                    System.out.println("\t\tDetails");
+                    System.out.println("\t\tId: "+professor.getUserId()+"\n\t\tProfessorName: "+professor.getUserName()+"\n\t\tEmailId: "+professor.getEmailId()+"\n\t\tAreaOfExpertise: "+professor.getAreaOfExpertise()+"\n\t\tYearsOfExperience: "+professor.getYearsOfExperience());
                     break;
                 case 2:
                     ArrayList<Course> courses= profServ.viewAllCourses(professor.getUserId());
-                    System.out.println("CourseId-CourseName");
+                    System.out.println("\t\tCourseId-CourseName");
                     for(Course c:courses)
                         System.out.println(c.getCourseId()+"\t-\t"+c.getCourseName());
                     break;
                 case 3:
-                    System.out.println("Register for the courses");
+                    System.out.println("\t\tRegister for the courses");
                     profServ.registerCourses(professor);
                     break;
                 case 4:
-                    System.out.println("View enrolled students in each course");
+                    System.out.println("\t\tView enrolled students in each course");
                     Map<String,ArrayList<String>> courseWithStudents=profServ.viewEnrolledStudents(professor);
                     int courseindex=1;
                     for(String CourseName:courseWithStudents.keySet()){
@@ -50,13 +50,13 @@ public class CrsProfessorMenu {
                     }
                     break;
                 case 5:
-                    System.out.println("Make a report card for a student");
+                    System.out.println("\t\tMake a report card for a student");
                     profServ.assignGrades(professor);
                     break;
                 case 6:
                     return;
                 default:
-                    System.out.println("Invalid Choice");
+                    System.out.println("\t\tInvalid Choice");
 
             }
         }

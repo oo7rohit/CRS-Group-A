@@ -26,7 +26,11 @@ public class AdminDaoImplementation implements AdminDaoInterface{
         }
         return instance;
     }
-
+    /**
+	 * Method to add professor
+	 * 
+	 * @param professor of the student
+	 */
     @Override
     public boolean addProfessor(Professor professor) {
         boolean ok = true;
@@ -123,7 +127,9 @@ public class AdminDaoImplementation implements AdminDaoInterface{
         }
         return ok;
     }
-
+    /**
+	 * Method to Approve Students
+	 */
     @Override
     public boolean approveStudents() {
         boolean ok = true;
@@ -165,6 +171,11 @@ public class AdminDaoImplementation implements AdminDaoInterface{
         }
         return ok;
     }
+    /**
+	 * Method to find if student is approved
+	 * 
+	 * @param studentId of the student
+	 */
 
     public boolean isApproved(String studentId) throws Exception{
         Connection con = DBUtils.getConnection();
@@ -177,6 +188,12 @@ public class AdminDaoImplementation implements AdminDaoInterface{
         }
         return false;
     }
+    
+    /**
+	 * Method to approve students
+	 * 
+	 * @param studentId of the student
+	 */
     public void approveStudents(String studentId) throws Exception {
             String id = studentId;
             String sql1 = "UPDATE student SET isApproved = 1 where studentId = ?";
@@ -185,6 +202,12 @@ public class AdminDaoImplementation implements AdminDaoInterface{
             statement.setString(1,id);
             statement.executeUpdate();
     }
+    /**
+	 * Method to assign courses to professor
+	 * 
+	 * @param courseId of the course
+	 * @param professorId of the professor
+	 */
     @Override
 	public void assignCourse(int courseId, String professorId) throws CourseNotFoundException{
 		try {
@@ -212,7 +235,9 @@ public class AdminDaoImplementation implements AdminDaoInterface{
 			System.out.println(e.getMessage());
 		}
 	}
-    
+    /**
+	 * Method to View Courses
+	 */
 	@Override
 	public List<Course> viewCourse() throws Exception{
 		// TODO Auto-generated method stub
@@ -238,9 +263,4 @@ public class AdminDaoImplementation implements AdminDaoInterface{
 		return null;
 	}
 
-//
-//    @Override
-//    public ArrayList<Grade> fetchGrade(int userId) {
-//        return null;
-//    }
 }
