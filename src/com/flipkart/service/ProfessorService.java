@@ -19,8 +19,11 @@ public class ProfessorService implements ProfessorServiceInterface {
 
         return profOp.validateCredentialsWithDB(userId,password);
     }
-    public ArrayList<Course> viewAllCourses() throws SQLException{
-        return profOp.viewCoursesWithDB();
+    public ArrayList<Course> viewAllCourses(String userId) throws SQLException{
+        return profOp.viewCoursesWithDB(userId);
+    }
+    public ArrayList<Course> viewAvailbleCourses(String userId) throws SQLException{
+    	return profOp.viewAvailableCoursesWithDB();
     }
     public Map<String, ArrayList<String>> viewEnrolledStudents(Professor professor) throws SQLException {
         Map<String,ArrayList<String>> students=profOp.viewEnrolledStudentsWithDB(professor);
@@ -51,7 +54,7 @@ public class ProfessorService implements ProfessorServiceInterface {
 
     }
     public void registerCourses(Professor professor) throws SQLException, IOException {
-        ArrayList<Course> courses=profOp.viewAvailableCoursesWithDB(professor);
+        ArrayList<Course> courses=profOp.viewAvailableCoursesWithDB();
         while(true) {
             System.out.println("---Enter the Index which you want to register(Enter 0 to exit)");
             System.out.println("Index." +"CourseName-CourseId");

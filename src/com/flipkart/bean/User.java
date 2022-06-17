@@ -6,6 +6,7 @@ public class User {
     private String emailId;
     private String password;
     private String contactNo;
+    private String role;
 
     public User(){
             }
@@ -18,15 +19,24 @@ public class User {
      * @param password
      * @param contactNo
      */
-    public User(String userId, String userName, String emailId, String password, String contactNo) {
+    public User(String userId, String userName, String emailId, String password, String contactNo, String role) {
         this.userId = userId;
         this.userName = userName;
         this.emailId = emailId;
         this.password = password;
         this.contactNo = contactNo;
+        this.role = role;
     }
 
-    public String getUserId() {
+    public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getUserId() {
         return userId;
     }
 

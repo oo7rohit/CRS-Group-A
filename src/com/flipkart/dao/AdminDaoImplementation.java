@@ -16,8 +16,6 @@ import java.util.Scanner;
 
 public class AdminDaoImplementation implements AdminDaoInterface{
 
-//    final org.apache.log4j.Logger logger = Logger.getLogger(AdminDaoImplementation.class);
-
     private static volatile AdminDaoImplementation instance = null;
     public AdminDaoImplementation() {}
     public static AdminDaoImplementation getInstance() {
@@ -35,6 +33,7 @@ public class AdminDaoImplementation implements AdminDaoInterface{
         try{
             Connection con = DBUtils.getConnection();
             Statement stmt = con.createStatement();
+            
             if(con==null)System.out.println("connection not established");
                 PreparedStatement preparedStatement = con.prepareStatement(SQLQueriesConstants.ADD_USER_QUERY);
                 preparedStatement.setString(1, professor.getUserId());
@@ -42,6 +41,7 @@ public class AdminDaoImplementation implements AdminDaoInterface{
                 preparedStatement.setString(3, professor.getUserName());
                 preparedStatement.setString(4, professor.getEmailId());
                 preparedStatement.setString(5, professor.getContactNo());
+                preparedStatement.setString(6, "PROFESSOR");
 
                 int rows = preparedStatement.executeUpdate();
 
@@ -62,6 +62,10 @@ public class AdminDaoImplementation implements AdminDaoInterface{
         }
         return ok;
     }
+    
+    /**
+	 * Method to validate credentials 
+	 */
 
     public boolean validateCredentials(String adminId, String password){
         try{
@@ -69,12 +73,7 @@ public class AdminDaoImplementation implements AdminDaoInterface{
             if(con==null)System.out.println("connection not established");
             PreparedStatement preparedStatement = con.prepareStatement(SQLQueriesConstants.VERIFY_ADMIN_CREDENTIAL);
             preparedStatement.setString(1, adminId);
-            preparedStatement.setString(2, adminId);
-            preparedStatement.setString(3, password);
-//            String sql = "SELECT * FROM user, admin where userId like '"+adminId+"' and adminId like '"+adminId+"' and user.password like  '"+password+"'";
-//            String sql = "select * from user where userid="+studentId+" and password="+password;
-            
-//            PreparedStatement statement = con.prepareStatement(sql);
+            preparedStatement.setString(2, password);
             ResultSet rs = preparedStatement.executeQuery();
             return true;
         }
@@ -83,15 +82,19 @@ public class AdminDaoImplementation implements AdminDaoInterface{
             return false;
         }
     }
+    /**
+	 * Method to Add Course
+	 */
     @Override
     public boolean addCourse(Course course) {
         boolean ok = true;
         try{
             Connection con = DBUtils.getConnection();
-            Statement stmt = con.createStatement();
             if(con==null) System.out.println("connection not established");
-            String sql = "insert into course values(" + course.getCourseId() + ", '" + course.getCourseName()+ "')";
-            stmt.executeUpdate(sql);
+            PreparedStatement preparedStatement = con.prepareStatement(SQLQueriesConstants.ADD_COURSE);
+            preparedStatement.setInt(1, course.getCourseId());
+            preparedStatement.setString(2, course.getCourseName());        
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             ok = false;
             System.out.println(e.getMessage());
@@ -99,6 +102,10 @@ public class AdminDaoImplementation implements AdminDaoInterface{
         }
         return ok;
     }
+    
+    /**
+	 * Method to Drop Course
+	 */
 
     @Override
     public boolean dropCourse(int courseId) {
@@ -107,15 +114,11 @@ public class AdminDaoImplementation implements AdminDaoInterface{
             Connection con = DBUtils.getConnection();
             Statement stmt = con.createStatement();
             if(con==null)System.out.println("connection not established");
-//            String sql = "DELETE FROM course WHERE courseId= " + courseId;
-//            stmt.executeUpdate(sql);
             PreparedStatement preparedStatement = con.prepareStatement(SQLQueriesConstants.DELETE_COURSE_QUERY);
             preparedStatement.setInt(1, courseId);
-//            stmt.executeUpdate(SQLQueriesConstants.DELETE_COURSE_QUERY);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             ok = false;
-            //System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return ok;
@@ -131,18 +134,15 @@ public class AdminDaoImplementation implements AdminDaoInterface{
             Scanner in= new Scanner(System.in);
             int ch =1;
             while(ch!=0) {
-                String sql = "select * from student where isApproved=0";
-                ResultSet rs = stmt.executeQuery(sql);
+            	PreparedStatement preparedStatement = con.prepareStatement(SQLQueriesConstants.VIEW_PENDING_APPROVAL);
+            	
+                ResultSet rs = preparedStatement.executeQuery();
                 int flag=0;
-                System.out.println("Here is a list of all pending students ++++++++++++");
+                System.out.println("Here is a list of all pending students");
                 while (rs.next()) {
                     String sId = rs.getString(1);
                     System.out.println(rs.getString(1));
                     flag=1;
-//                String s = "select * from user where userId = " +sId;
-//                Statement st = con.createStatement();
-//                ResultSet r = st.executeQuery(s);
-//                System.out.println(r.getString(3)+ " " +r.getString(4));
                 }
                 if(flag==1) {
                     System.out.println("Enter student id");
@@ -151,7 +151,6 @@ public class AdminDaoImplementation implements AdminDaoInterface{
                     PreparedStatement statement = con.prepareStatement(sql1);
                     statement.setString(1,id);
                     statement.executeUpdate();
-                    //statement.executeQuery(sql);
                 }
                 else{
                     System.out.println("<<<<<<< No student left to be approved >>>>>>>>>>>");

@@ -16,7 +16,7 @@ public class CrsProfessorMenu {
     public void professorMenu(Professor professor) throws IOException, SQLException {
         while(true) {
             System.out.println("---Professor Menu-----");
-            System.out.println("1.view Details\n2.view Courses\n3.Register for Courses\n4.View Enrolled Students in courses\n5.Make Report Card for a student\n6.Exit");
+            System.out.println("1.view Details\n2.view Courses\n3.View Available Courses\n4.View Enrolled Students in courses\n5.Make Report Card for a student\n6.Exit");
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Enter the choice");
             int option = Integer.parseInt(br.readLine());
@@ -26,7 +26,7 @@ public class CrsProfessorMenu {
                     System.out.println("Id: "+professor.getUserId()+"\nProfessorName: "+professor.getUserName()+"\nEmailId: "+professor.getEmailId()+"\nAreaOfExpertise: "+professor.getAreaOfExpertise()+"\nYearsOfExperience: "+professor.getYearsOfExperience());
                     break;
                 case 2:
-                    ArrayList<Course> courses= profServ.viewAllCourses();
+                    ArrayList<Course> courses= profServ.viewAllCourses(professor.getUserId());
                     System.out.println("CourseId-CourseName");
                     for(Course c:courses)
                         System.out.println(c.getCourseId()+"\t-\t"+c.getCourseName());

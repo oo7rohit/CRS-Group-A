@@ -1,17 +1,14 @@
 package com.flipkart.dao;
 
 import com.flipkart.application.CrsApplication;
-import com.flipkart.bean.Course;
-import com.flipkart.bean.GradeCard;
-import com.flipkart.bean.Student;
+import com.flipkart.bean.*;
 import com.flipkart.constants.SQLQueriesConstants;
 import com.flipkart.exception.CourseAlreadyRegisteredException;
 import com.flipkart.utils.DBUtils;
 //import org.apache.log4j.Logger;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class StudentDaoImplementation implements StudentDaoInterface {
 
@@ -163,18 +160,19 @@ public class StudentDaoImplementation implements StudentDaoInterface {
         try{
             for(Integer course:courses) {
             	
-            	PreparedStatement preparedStatement1 = connection.prepareStatement("select courseId from professorreg where courseId like '"+course+"'");
-            	int flag = preparedStatement1.executeUpdate();
-            	if (flag == 0) {
-            		continue;
-            	}
-            	System.out.println("hksjhahf");
+//            	PreparedStatement preparedStatement1 = connection.prepareStatement("select courseId from professorreg where courseId like '"+course+"'");
+//            	int flag = preparedStatement1.executeUpdate();
+//            	if (flag == 0) {
+//            		continue;
+//            	}
+            	
             	
             	
                 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesConstants.ADD_COURSE_QUERY);
                 preparedStatement.setString(1, studentId);
                 preparedStatement.setInt(2, course);
                 preparedStatement.setString(3, "0");
+                preparedStatement.setInt(4, 1);
                 preparedStatement.executeUpdate();
             }
         }
@@ -247,4 +245,31 @@ public class StudentDaoImplementation implements StudentDaoInterface {
         }
         return gradeCards;
     }
+    
+    @Override
+	public List<PaymentNotification> viewNotification(String studentId) throws SQLException{
+		List<PaymentNotification> notificationList = new ArrayList<PaymentNotification>();
+		Connection connection = DBUtils.getConnection();
+		if(connection==null)System.out.println("connection not established");
+		try {
+			PreparedStatement ps = connection.prepareStatement(SQLQueriesConstants.FETCH_NOTIFICATIONS);
+			ps.setString(1, studentId);
+
+			ResultSet rs = ps.executeQuery();
+			while(rs.next())
+			{
+//				System.out.println("Hello ji");
+				String referenceId = rs.getString("referenceId");
+				String message = rs.getString("message");
+				
+				PaymentNotification notification = new PaymentNotification(studentId,referenceId,message);
+				notificationList.add(notification);
+			}
+			return notificationList;
+			
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+			return null;
+		}
+	}
 }

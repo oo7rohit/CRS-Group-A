@@ -1,6 +1,7 @@
 package com.flipkart.service;
 
 import com.flipkart.bean.*;
+import com.flipkart.constants.SQLQueriesConstants;
 import com.flipkart.dao.StudentDaoImplementation;
 import com.flipkart.exception.CourseAlreadyRegisteredException;
 import com.flipkart.utils.DBUtils;
@@ -48,16 +49,18 @@ public class StudentOperations implements StudentInterface {
     }
 
     @Override
-    public void registerCourses(String studentID) throws SQLException,CourseAlreadyRegisteredException{
+    public void registerCourses(String studentId) throws SQLException,CourseAlreadyRegisteredException{
         Scanner sc=new Scanner(System.in);
         System.out.println("The courses are: ");
         
         Connection connection = DBUtils.getConnection();
 //        Statement stmt = connection.createStatement();
         
-        String sql = "select course.courseId,course.courseName, userId from professorreg, course where course.courseId = professorreg.courseId;";
+//        String sql = "select * from course where professorId is not null";
+//        String sql = "select * from registrar where userId = " + studentId;
         
-        PreparedStatement statement = connection.prepareStatement(sql);
+        PreparedStatement statement = connection.prepareStatement(SQLQueriesConstants.VIEW_REGISTERED_COURSES);
+        statement.setString(1, studentId);
         
         ResultSet rs = statement.executeQuery();
         
@@ -71,7 +74,7 @@ public class StudentOperations implements StudentInterface {
             courses.add(new pair(courseId,name,professorId));
         }
         
-        System.out.println("CourseId-CourseName-ProfessorId");
+        System.out.println("StudentId - CourseID - Grade");
         for(pair p:courses)
             System.out.println(p.course+"\t-\t"+p.name+"\t-\t"+p.prof);
         if(courses.size()==4)
@@ -90,11 +93,17 @@ public class StudentOperations implements StudentInterface {
             for (int i = 0; i < count; i++) {
                 selectedCourse.add(sc.nextInt());
             }
-            studentDaoImplementation.registerCourses(studentID, selectedCourse);
+            studentDaoImplementation.registerCourses(studentId, selectedCourse);
         }
     }
 
     @Override
+	public List<PaymentNotification> viewNotifications(String studentID) throws SQLException{
+		// TODO Auto-generated method stub
+    	return studentDaoImplementation.viewNotification(studentID);
+	}
+
+	@Override
     public void viewGradeCard(String studentId) throws SQLException {
      ArrayList<GradeCard> gradeCards=studentDaoImplementation.viewGrades(studentId);
      for(GradeCard g:gradeCards)

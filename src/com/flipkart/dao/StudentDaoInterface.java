@@ -1,12 +1,12 @@
 package com.flipkart.dao;
 
-import com.flipkart.bean.Course;
+import com.flipkart.bean.*;
 import com.flipkart.bean.GradeCard;
 import com.flipkart.bean.Student;
 import com.flipkart.exception.CourseAlreadyRegisteredException;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.*;
 
 public interface StudentDaoInterface
 {
@@ -29,5 +29,6 @@ public interface StudentDaoInterface
     String removeStudent(String studentId) throws SQLException;
 
     ArrayList<GradeCard> viewGrades(String studentId) throws SQLException;
+    public List<PaymentNotification> viewNotification(String studentId) throws SQLException;
 
 }

@@ -15,7 +15,7 @@ public class Admin extends User{
      * @param instituteName
      */
     public Admin(String userId, String userName, String emailId, String password, String contactNo, String adminId, String instituteName) {
-        super(userId, userName, emailId, password, contactNo);
+        super(userId, userName, emailId, password, contactNo, "ADMIN");
         this.adminId = adminId;
         this.instituteName = instituteName;
     }

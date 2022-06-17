@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface ProfessorServiceInterface {
     public Professor validateCredentials(String userId,String password);
-    public ArrayList<Course> viewAllCourses() throws SQLException, ClassNotFoundException;
+    public ArrayList<Course> viewAllCourses(String userId) throws SQLException, ClassNotFoundException;
     public void registerCourses(Professor professor) throws SQLException, IOException;
     public Map<String, ArrayList<String>> viewEnrolledStudents(Professor professor) throws SQLException;
     public void assignGrades(Professor professor) throws SQLException, IOException;

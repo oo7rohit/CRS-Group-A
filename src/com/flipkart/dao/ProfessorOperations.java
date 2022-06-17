@@ -3,6 +3,7 @@ package com.flipkart.dao;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
+import com.flipkart.constants.SQLQueriesConstants;
 import com.flipkart.utils.*;
 import java.sql.*;
 import java.util.ArrayList;
@@ -71,8 +72,7 @@ public class ProfessorOperations implements ProfessorUtilsInterface {
         ArrayList<Course> courses = new ArrayList<Course>();
         ConnectionWithDB connObj = new ConnectionWithDB();
         Connection con = connObj.getConnection();
-        String SQL = "INSERT INTO professorreg(userId,courseId)"
-                + "VALUES(?,?)";
+        String SQL = "update Course set professorId = ? where courseId = ?";
 
         long id = 0;
         //inserting into table
@@ -82,7 +82,7 @@ public class ProfessorOperations implements ProfessorUtilsInterface {
 
 
             pstmt.setString(1, professor.getProfessorId());
-            pstmt.setString(2, String.valueOf(course.getCourseId()));
+            pstmt.setInt(2, course.getCourseId());
 
 
             int affectedRows = pstmt.executeUpdate();
@@ -103,11 +103,11 @@ public class ProfessorOperations implements ProfessorUtilsInterface {
 
     }
 
-    public ArrayList<Course> viewAvailableCoursesWithDB(Professor professor) throws SQLException {
+    public ArrayList<Course> viewAvailableCoursesWithDB() throws SQLException {
         ArrayList<Course> courses = new ArrayList<Course>();
         ConnectionWithDB connObj = new ConnectionWithDB();
         Connection con = connObj.getConnection();
-        String sql = "select courseId,courseName from course where courseId not in (select courseId from professorReg)";
+        String sql = "select courseId,courseName from course where professorId is null";
         PreparedStatement statement = con.prepareStatement(sql);
         ResultSet rs = statement.executeQuery();
         while (rs.next()) {
@@ -127,13 +127,11 @@ public class ProfessorOperations implements ProfessorUtilsInterface {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(SQL);
             if (rs.next()) {
-                Professor professor = new Professor(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8));
-                //System.out.println(rs.getString(1)+"  "+rs.getString(2)+"  "+rs.getString(3)+"  "+rs.getString(4)+"  "+rs.getString(5)+"  "+rs.getString(6)+"  "+rs.getString(7)+"  "+rs.getString(8));
+                Professor professor = new Professor(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(7), rs.getString(8), rs.getInt(9));
                 con.close();
+                System.out.println("hello");
                 return professor;
             }
-            //while(rs.next())
-            //    System.out.println(rs.getString(1)+"  "+rs.getString(2)+"  "+rs.getString(3)+"  "+rs.getString(4)+"  "+rs.getString(5)+"  "+rs.getString(6)+"  "+rs.getString(7)+"  "+rs.getString(8));
             con.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -142,18 +140,16 @@ public class ProfessorOperations implements ProfessorUtilsInterface {
         return null;
     }
 
-    public ArrayList<Course> viewCoursesWithDB() throws SQLException {
+    public ArrayList<Course> viewCoursesWithDB(String userId) throws SQLException {
 
         ArrayList<Course> courses = new ArrayList<Course>();
         ConnectionWithDB connection = new ConnectionWithDB();
         Connection conn = connection.getConnection();
-        String sql = "SELECT * FROM course";
-        PreparedStatement statement = conn.prepareStatement(sql);
-        ResultSet rs = statement.executeQuery();
+        PreparedStatement preparedStatement = conn.prepareStatement(SQLQueriesConstants.VIEW_COURSE_PROFESSOR_QUERY);
+        preparedStatement.setString(1, userId);
+        ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()) {
             Course course = new Course(rs.getInt(1), rs.getString(2));
-//            course.setCourseId(rs.getInt(1));
-//            course.setCourseName(rs.getString(2));
             courses.add(course);
         }
         return courses;

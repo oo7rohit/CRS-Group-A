@@ -1,9 +1,10 @@
 package com.flipkart.application;
-import com.flipkart.bean.Course;
+import com.flipkart.bean.*;
 import com.flipkart.bean.Student;
 import com.flipkart.exception.CourseAlreadyRegisteredException;
 import com.flipkart.service.PaymentServiceImplementation;
 import com.flipkart.service.PaymentServiceInterface;
+import com.flipkart.service.StudentInterface;
 import com.flipkart.dao.StudentDaoImplementation;
 import com.flipkart.service.StudentOperations;
 
@@ -11,7 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.*;
 
 public class CrsStudentMenu {
 
@@ -60,11 +61,38 @@ public class CrsStudentMenu {
                         studentOperations.registeredCourseList(student.getUserId());
                         break;
                     case 8:
+                    	viewNotifications(student.getUserId());
+                    	break;
+                    case 9:
                         return;
                     default:
                         System.out.println("Exit");
                 }
             }
+            
         }
+        public static void printNotification(PaymentNotification notification)
+    	{
+    		
+    		System.out.println(String.format("%30s %30s",notification.getReferenceId(),notification.getMessage()));
+    	}
+        public void viewNotifications(String studentID) throws SQLException
+        
+    	{
+        	StudentInterface studentService = new StudentOperations();
+    		List<PaymentNotification> notificationList = new ArrayList<PaymentNotification>();
+    		notificationList = studentService.viewNotifications(studentID);
+    		
+    		if(notificationList.size()==0)
+    		{
+    			System.err.println("No notifications as of now. Come back again!!");
+    			return;
+    		}
+    		
+    		System.out.println(String.format("%30s %30s ","Reference ID","Status"));
+    		notificationList.forEach(CrsStudentMenu::printNotification);
+    		
+    		
+    	}
 
     }

@@ -1,8 +1,6 @@
 package com.flipkart.service;
 
-import com.flipkart.bean.Course;
-import com.flipkart.bean.Professor;
-import com.flipkart.bean.Student;
+import com.flipkart.bean.*;
 import com.flipkart.exception.CourseAlreadyRegisteredException;
 
 import java.sql.SQLException;
@@ -15,7 +13,8 @@ public interface StudentInterface {
     public void registerCourses(String studentID) throws SQLException, CourseAlreadyRegisteredException;
 
     void viewGradeCard(String studentId) throws SQLException;
-
+    
     public List<Course> viewCourses() throws SQLException;
+    public List<PaymentNotification> viewNotifications(String studentID) throws SQLException;
 }
 

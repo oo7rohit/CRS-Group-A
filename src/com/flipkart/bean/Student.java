@@ -22,7 +22,7 @@ public class Student extends User{
      * @param isApproved
      */
     public Student(String userId, String userName, String emailId, String password, String contactNo, String userId1, int semester, String grade, String feeStatus,boolean isApproved) {
-        super(userId, userName, emailId, password, contactNo);
+        super(userId, userName, emailId, password, contactNo, "STUDENT");
         this.userId = userId1;
         this.semester = semester;
         this.grade = grade;

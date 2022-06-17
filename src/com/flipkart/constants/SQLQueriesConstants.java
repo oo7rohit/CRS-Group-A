@@ -1,21 +1,25 @@
 package com.flipkart.constants;
 
 public class SQLQueriesConstants {
-
-    public static final String ADD_COURSE_QUERY="insert into registrar values (?, ?, ?)";
+	public static final String ADD_COURSE = "insert into course (courseId, courseName) values (?, ?)";
+    public static final String ADD_COURSE_QUERY="insert into registrar values (?, ?, ?, ?)";
     public static final String ADD_PROFESSOR_QUERY="insert into professor values(?,?,?)";
     public static final String ADD_STUDENT_QUERY = "insert into student values (?, ?, ?, ?, ?)";
-    public static final String ADD_USER_QUERY = "insert into user values (?, ?, ?, ?, ?)";
+    public static final String ADD_USER_QUERY = "insert into user values (?, ?, ?, ?, ?, ?)";
     public static final String UPDATE_PASSWORD="update user set password = ? where userid=?";
     public static final String GET_DETAILS="select userid,password from user where userid = ? and password = ?";
     public static final String VIEW_GRADE_CARD = "select * from gradeCard where userId = ?";
     public static final String VIEW_REGISTERED_COURSES="select * from registrar where userId=?";
+    public static final String VIEW_NOT_REGISTERED_COURSES="select * from registrar where userId!=?";
     public static final String DELETE_COURSE_QUERY = "delete from Course where courseId = ?";
     public static final String ASSIGN_COURSE_QUERY = "update Course set professorId = ? where courseId = ?";
     public static final String VIEW_COURSE_QUERY = "SELECT courseId, courseName, professorId from Course";
-    public static final String VERIFY_ADMIN_CREDENTIAL = "SELECT * FROM USER, ADMIN WHERE userId = ? and adminId = ? and user.password = ?";
+    public static final String VIEW_COURSE_PROFESSOR_QUERY = "SELECT courseId, courseName from Course where professorId = ?";
+    public static final String VERIFY_ADMIN_CREDENTIAL = "SELECT * from ADMIN WHERE adminId = ? and password = ?";
+    public static final String VIEW_PENDING_APPROVAL = "select * from student where isApproved=0";
+    public static final String FETCH_NOTIFICATIONS = "select * from notification where studentId = ?";
 };
-
+// "select * from student where isApproved=0"
 
 
 //

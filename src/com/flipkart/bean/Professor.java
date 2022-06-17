@@ -19,7 +19,7 @@ public class Professor extends User{
      * @param yearsOfExperience
      */
     public Professor(String userId, String userName, String emailId, String password, String contactNo, String professorId, String areaOfExpertise, int yearsOfExperience) {
-        super(userId, userName, emailId, password, contactNo);
+        super(userId, userName, emailId, password, contactNo, "PROFESSOR");
         this.professorId = professorId;
         this.areaOfExpertise = areaOfExpertise;
         this.yearsOfExperience = yearsOfExperience;

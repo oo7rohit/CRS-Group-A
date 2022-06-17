@@ -15,7 +15,13 @@ import java.sql.SQLException;
 
 public class CrsLoginMenu {
 
-
+/**
+ * 
+ * @throws IOException
+ * @throws SQLException
+ * @throws UserNotFoundException
+ * @throws CourseAlreadyRegisteredException
+ */
     public void crsLoginMenu() throws IOException, SQLException, UserNotFoundException, CourseAlreadyRegisteredException {
         BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Enter the User Type\n1.Student \n2.Professor \n3.Admin");
@@ -43,8 +49,8 @@ public class CrsLoginMenu {
                     throw new UserNotFoundException(userId);
                 }
                 else{
-                    System.out.println("-----------------Cant LOGIN--------------------");
-                    System.out.println("--- Student has not been approved yet !! -------");
+                    System.out.println("-----------------Can't LOGIN--------------------");
+                    System.out.println("--- Please Get Approval from Admin!! -------");
                     System.out.println("------------------------------------------------");
                 }
                 break;
@@ -54,7 +60,7 @@ public class CrsLoginMenu {
                 Professor professor=profServ.validateCredentials(userId,password);
                 if(professor!=null){
                     System.out.println("+++++++++++++++++++++++++++++++++++");
-                    System.out.println("Hey Professor. Welcome to the portal");
+                    System.out.println("-----Logged in as Professor-----");
                     System.out.println("+++++++++++++++++++++++++++++++++++");
                     CrsProfessorMenu crsProfessorMenu=new CrsProfessorMenu();
                     crsProfessorMenu.professorMenu(professor);
